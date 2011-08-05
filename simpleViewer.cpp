@@ -47,7 +47,7 @@ void Viewer::init()
 	quadric = gluNewQuadric();
 	gluQuadricTexture(quadric, GLU_TRUE);
 
-	QImage image = QGLWidget::convertToGLFormat(QImage("orion_b.jpg"));
+	QImage image = QGLWidget::convertToGLFormat(QImage("earth.jpg"));
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	gluBuild2DMipmaps(GL_TEXTURE_2D,     // texture to specify
