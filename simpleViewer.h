@@ -44,4 +44,5 @@ private:
 
     void drawNames();
     void lonLat2Point(float , float , Vector *, GLdouble);
+    void drawCurve();
 };
