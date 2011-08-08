@@ -179,16 +179,16 @@ void Viewer::drawCurve()
 
     //glMatrixMode(GL_MODELVIEW);
     
-    glBegin(GL_POINTS);
+    //glBegin(GL_POINTS);
     //glPushMatrix();
     //glLoadIdentity();
-    glColor3f(1.0,1.0,0.0);
-    glPopMatrix();
-    glVertex3f(v1[0].x, v1[0].y, v1[0].z);
-    glVertex3f(v1[1].x, v1[1].y, v1[1].z);
-    glVertex3f(v2[0].x, v2[0].y, v2[0].z);
-    glVertex3f(v2[1].x, v2[1].y, v2[1].z);
-    glEnd();
+        //glColor3f(1.0,1.0,0.0);
+        //glPopMatrix();
+        //glVertex3f(v1[0].x, v1[0].y, v1[0].z);
+        //glVertex3f(v1[1].x, v1[1].y, v1[1].z);
+        //glVertex3f(v2[0].x, v2[0].y, v2[0].z);
+        //glVertex3f(v2[1].x, v2[1].y, v2[1].z);
+    //glEnd();
 
     GLfloat ctrlPts [4][3] = { {v1[0].x, v1[0].y, v1[0].z}, {v2[0].x, v2[0].y, v2[0].z},
                                    {v2[1].x, v2[1].y, v2[1].z},  {v1[1].x, v1[1].y, v1[1].z} };
@@ -197,19 +197,19 @@ void Viewer::drawCurve()
     glEnable (GL_MAP1_VERTEX_3);
 
     GLint k;
-    glPushMatrix();
+    //glPushMatrix();
     //glLoadIdentity();
     //glColor3f (1.0, 1.0, 1.0);
     
     glBegin (GL_LINE_STRIP);
-        glColor3f (0.0, 1.0, 1.0);
+        glColor3f (1.0, 1.0, 1.0);
             //  Generate Bezier "curve".
         glLineWidth(10);
         for (k = 0; k <= 50; k++)
             glEvalCoord1f (GLfloat (k) / 50.0);
     glEnd ( );
-    glPopMatrix();
-    glPushMatrix();
+    //glPopMatrix();
+    //glPushMatrix();
     //glLoadIdentity();
     //
     //glPopMatrix();
@@ -219,6 +219,6 @@ void Viewer::drawCurve()
         for (k = 0; k < 4; k++);
                 glVertex3fv (&ctrlPts [k][0]);
     glEnd ( );
-    glPopMatrix();
+    //glPopMatrix();
     
 }
