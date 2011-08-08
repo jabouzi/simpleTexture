@@ -180,9 +180,9 @@ void Viewer::drawCurve()
     //glMatrixMode(GL_MODELVIEW);
     
     glBegin(GL_POINTS);
-    glPushMatrix();
-    glLoadIdentity();
-    //glColor3f(1.0,1.0,0.0);
+    //glPushMatrix();
+    //glLoadIdentity();
+    glColor3f(1.0,1.0,0.0);
     glPopMatrix();
     glVertex3f(v1[0].x, v1[0].y, v1[0].z);
     glVertex3f(v1[1].x, v1[1].y, v1[1].z);
@@ -201,7 +201,9 @@ void Viewer::drawCurve()
     //glLoadIdentity();
     //glColor3f (1.0, 1.0, 1.0);
     
-    glBegin (GL_LINE_STRIP);             //  Generate Bezier "curve".
+    glBegin (GL_LINE_STRIP);
+        glColor3f (0.0, 1.0, 1.0);
+            //  Generate Bezier "curve".
         glLineWidth(10);
         for (k = 0; k <= 50; k++)
             glEvalCoord1f (GLfloat (k) / 50.0);
@@ -209,9 +211,10 @@ void Viewer::drawCurve()
     glPopMatrix();
     glPushMatrix();
     //glLoadIdentity();
-    //glColor3f (1.0, 0.0, 0.0);
+    //
     //glPopMatrix();
     glBegin (GL_POINTS);                 //  Plot control points.
+    glColor3f (1.0, 0.0, 1.0);
     glPointSize (10);                   //  Set point size to 5.0.
         for (k = 0; k < 4; k++);
                 glVertex3fv (&ctrlPts [k][0]);
