@@ -52,8 +52,7 @@ void Viewer::draw()
     glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
-    glPushMatrix();
-    glLoadIdentity();
+    //glPushMatrix();
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glPushMatrix();
     glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);  
@@ -61,12 +60,14 @@ void Viewer::draw()
     //glRotatef(-15.0f, 0.0f, 0.0f, 1.0f);  
     gluSphere(quadric, EARTH_RADIUS, 360, 180);
     glPopMatrix();
-    drawNames();
-    glPushMatrix();
+    //glPushMatrix();
+    //drawNames();
+    //glPopMatrix();
+    //glPushMatrix();
     //glLoadIdentity();
     drawCurve();
-    glPopMatrix();
-    glPopMatrix();
+    //glPopMatrix();
+    //glPopMatrix();
     
     // position the light
     //float lightPos[4] = {-10, 0, 5, 0};
@@ -83,6 +84,8 @@ void Viewer::init()
 {
     setSceneRadius(10000);
 	showEntireScene();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
 	glEnable(GL_TEXTURE_2D);
     glEnable(GL_LIGHTING);
@@ -170,16 +173,16 @@ void Viewer::drawCurve()
     Vector v1[2];
     Vector v2[2];
     lonLat2Point(21.4273779,39.8148383, &v1[0],0);
-    lonLat2Point(21.427377,9.8148383, &v2[0],9000);
+    lonLat2Point(21.427377,9.8148383, &v2[0],4000);
     lonLat2Point(45.0, -73.0, &v1[1],0);
-    lonLat2Point(45.0, -73.0, &v2[1],9000);
+    lonLat2Point(45.0, -73.0, &v2[1],4000);
 
     //glMatrixMode(GL_MODELVIEW);
     
     glBegin(GL_POINTS);
     glPushMatrix();
     glLoadIdentity();
-    glColor3f(1.0,1.0,0.0);
+    //glColor3f(1.0,1.0,0.0);
     glPopMatrix();
     glVertex3f(v1[0].x, v1[0].y, v1[0].z);
     glVertex3f(v1[1].x, v1[1].y, v1[1].z);
@@ -195,24 +198,24 @@ void Viewer::drawCurve()
 
     GLint k;
     glPushMatrix();
-    glLoadIdentity();
-    glColor3f (0.0, 1.0, 1.0);
-    glPopMatrix();
+    //glLoadIdentity();
+    //glColor3f (1.0, 1.0, 1.0);
+    
     glBegin (GL_LINE_STRIP);             //  Generate Bezier "curve".
-        glLineWidth(20);
+        glLineWidth(10);
         for (k = 0; k <= 50; k++)
             glEvalCoord1f (GLfloat (k) / 50.0);
     glEnd ( );
-
-    glPushMatrix();
-    glLoadIdentity();
-    glColor3f (1.0, 0.0, 1.0);
     glPopMatrix();
+    glPushMatrix();
+    //glLoadIdentity();
+    //glColor3f (1.0, 0.0, 0.0);
+    //glPopMatrix();
     glBegin (GL_POINTS);                 //  Plot control points.
-    glPointSize (25.0);                   //  Set point size to 5.0.
+    glPointSize (10);                   //  Set point size to 5.0.
         for (k = 0; k < 4; k++);
                 glVertex3fv (&ctrlPts [k][0]);
     glEnd ( );
-    //glPopMatrix();
+    glPopMatrix();
     
 }
