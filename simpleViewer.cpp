@@ -21,6 +21,7 @@
 *****************************************************************************/
 
 #include "simpleViewer.h"
+#include "countries.h"
 #include <math.h>
 
 using namespace std;
@@ -48,7 +49,8 @@ void Viewer::draw()
     glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
-    gluSphere(quadric, 5.0, 50, 100);
+    gluSphere(quadric, EARTH_RADIUS, 360, 180);
+    drawNames();
     
     // position the light
     //float lightPos[4] = {-10, 0, 5, 0};
@@ -69,7 +71,9 @@ void Viewer::init()
 	glEnable(GL_TEXTURE_2D);
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
-
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
 	quadric = gluNewQuadric();
 	gluQuadricTexture(quadric, GLU_TRUE);
@@ -97,6 +101,40 @@ void Viewer::init()
     setMouseTracking(true);
 
     light1->setPosition(-10, 0, 5);
+}
+
+void Viewer::lonLat2Point(float lon, float lat, Vector *pos, GLdouble extra)
+{
+    pos->x = (EARTH_RADIUS + extra) * cos(lon) * cos(lat);
+    pos->y = (EARTH_RADIUS + extra) * sin(lon) * cos(lat);
+    pos->z = (EARTH_RADIUS + extra) * sin(lat);
+
+    /*float    angX, angY;
+    angX = (180.f+lat) * PI / 180.f;
+    angY = lon * PI / 180.f;
+    pos->x = fabsf(cosf(angY)) * (EARTH_RADIUS + extra) * sinf(angX);
+    pos->y = EARTH_RADIUS + extra * sinf(angY);
+    pos->z = fabsf(cosf(angY)) * (EARTH_RADIUS + extra) * cosf(angX);
+    qDebug() << pos->x << pos->y << pos->z;*/
+}
+
+void Viewer::drawNames()
+{
+    glLineWidth(1);
+    Vector countries_positions[NUM_COUNTRIES];
+    Vector countries_positions2[NUM_COUNTRIES];
+    QFont myFont( "TypeWriter", 6, QFont::Bold);
+    for (int i=0; i<NUM_COUNTRIES-1; i++) {
+       lonLat2Point(countries[i].lon, countries[i].lat, &countries_positions[i],0);
+       lonLat2Point(countries[i].lon, countries[i].lat, &countries_positions2[i],1);
+       glBegin(GL_LINES);
+           glColor4f(1,0,0,1.0f);
+           glVertex3f (countries_positions[i].x  ,  countries_positions[i].y  ,  countries_positions[i].z);
+           glVertex3f (countries_positions2[i].x  ,  countries_positions2[i].y  ,  countries_positions2[i].z);
+       glEnd();
+       glColor4f(1.0, 1.0, 1.0, 1.0);
+       renderText(countries_positions2[i].x  ,  countries_positions2[i].y  ,  countries_positions2[i].z, QString(countries[i].name), myFont );
+    }
 }
 
 QString Viewer::helpString() const

@@ -21,7 +21,14 @@
 *****************************************************************************/
 
 #include <QGLViewer/qglviewer.h>
-//#include <QGLWidget>
+#include <QDebug>
+
+struct Vector {
+    float x, y, z;
+};
+
+#define PI 3.14159265
+#define EARTH_RADIUS    5.0
 
 class Viewer : public QGLViewer
 {
@@ -35,4 +42,7 @@ private:
 	GLuint		texture;
 	GLUquadric	*quadric;
     qglviewer::ManipulatedFrame* light1;
+
+    void drawNames();
+    void lonLat2Point(float , float , Vector *, GLdouble);
 };
