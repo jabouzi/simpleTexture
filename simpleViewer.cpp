@@ -21,8 +21,10 @@
 *****************************************************************************/
 
 #include "simpleViewer.h"
+#include <math.h>
 
 using namespace std;
+using namespace qglviewer;
 
 Viewer::~Viewer()
 {
@@ -33,16 +35,41 @@ Viewer::~Viewer()
 // Draws a spiral
 void Viewer::draw()
 {
+    float pos[4] = {-10, 0, 5, 0};
+    light1->getPosition(pos[0], pos[1], pos[2]);
+    glLightfv(GL_LIGHT1, GL_POSITION, pos);
+    
     glBindTexture(GL_TEXTURE_2D, texture);
+    /*GLfloat matAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    GLfloat matDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat matSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat matShininess[] = { 10.0f };
+    glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
+    glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
     gluSphere(quadric, 5.0, 50, 100);
+    
+    // position the light
+    //float lightPos[4] = {-10, 0, 5, 0};
+    //glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+    //glEnable(GL_LIGHT0);  
+    if (light1->grabsMouse())
+        drawLight(GL_LIGHT1, 1.2f);
+    else
+        drawLight(GL_LIGHT1); 
 }
 
 void Viewer::init()
 {
-  setSceneRadius(10);
+    setSceneRadius(10);
 	showEntireScene();
 
 	glEnable(GL_TEXTURE_2D);
+    glEnable(GL_LIGHTING);
+    glDisable(GL_LIGHT0);
+
 
 	quadric = gluNewQuadric();
 	gluQuadricTexture(quadric, GLU_TRUE);
@@ -57,6 +84,19 @@ void Viewer::init()
 			  GL_RGBA,           // pixel format
 			  GL_UNSIGNED_BYTE,  // color component format
 			  image.bits());     // pointer to texture image
+              
+    glEnable(GL_LIGHT1);
+    GLfloat lightKa[] = {.0f, .0f, .0f, 1.0f};      // ambient light
+    GLfloat lightKd[] = {.9f, .9f, .9f, 1.0f};      // diffuse light
+    GLfloat lightKs[] = {1, 1, 1, 1};               // specular light
+    glLightfv(GL_LIGHT1, GL_AMBIENT, lightKa);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightKd);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, lightKs);
+    
+    light1 = new ManipulatedFrame();
+    setMouseTracking(true);
+
+    light1->setPosition(-10, 0, 5);
 }
 
 QString Viewer::helpString() const

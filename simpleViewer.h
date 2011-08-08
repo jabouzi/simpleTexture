@@ -21,7 +21,7 @@
 *****************************************************************************/
 
 #include <QGLViewer/qglviewer.h>
-#include <QGLWidget>
+//#include <QGLWidget>
 
 class Viewer : public QGLViewer
 {
@@ -34,4 +34,5 @@ protected :
 private:
 	GLuint		texture;
 	GLUquadric	*quadric;
+    qglviewer::ManipulatedFrame* light1;
 };
