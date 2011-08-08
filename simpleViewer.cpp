@@ -63,10 +63,10 @@ void Viewer::draw()
     //glPushMatrix();
     //drawNames();
     //glPopMatrix();
-    //glPushMatrix();
+    glPushMatrix();
     //glLoadIdentity();
     drawCurve();
-    //glPopMatrix();
+    glPopMatrix();
     //glPopMatrix();
     
     // position the light
