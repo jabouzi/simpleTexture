@@ -53,6 +53,7 @@ void Viewer::draw()
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
     glPushMatrix();
+    glLoadIdentity();
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glPushMatrix();
     glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);  
