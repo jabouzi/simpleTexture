@@ -28,7 +28,7 @@ struct Vector {
 };
 
 #define PI 3.14159265
-#define EARTH_RADIUS    5.0
+#define EARTH_RADIUS    6378
 
 class Viewer : public QGLViewer
 {

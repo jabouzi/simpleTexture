@@ -36,11 +36,11 @@ Viewer::~Viewer()
 // Draws a spiral
 void Viewer::draw()
 {
-    float pos[4] = {-10, 0, 5, 0};
+    float pos[4] = {-10, 0, 8000, 0};
     light1->getPosition(pos[0], pos[1], pos[2]);
     glLightfv(GL_LIGHT1, GL_POSITION, pos);
     
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D, texture);   
     /*GLfloat matAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     GLfloat matDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat matSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -49,7 +49,12 @@ void Viewer::draw()
     glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
+    glPushMatrix();
+    glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);  
+    glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+    //glRotatef(-15.0f, 0.0f, 0.0f, 1.0f);  
     gluSphere(quadric, EARTH_RADIUS, 360, 180);
+    glPopMatrix();
     drawNames();
     
     // position the light
@@ -65,7 +70,7 @@ void Viewer::draw()
 
 void Viewer::init()
 {
-    setSceneRadius(10);
+    setSceneRadius(10000);
 	showEntireScene();
 
 	glEnable(GL_TEXTURE_2D);
@@ -81,6 +86,14 @@ void Viewer::init()
 	QImage image = QGLWidget::convertToGLFormat(QImage("earth.jpg"));
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
+    glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    /* glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); */
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    /* glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); */
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	gluBuild2DMipmaps(GL_TEXTURE_2D,     // texture to specify
 			  GL_RGBA,           // internal texture storage format
 			  image.width(),     // texture width
@@ -100,22 +113,22 @@ void Viewer::init()
     light1 = new ManipulatedFrame();
     setMouseTracking(true);
 
-    light1->setPosition(-10, 0, 5);
+    light1->setPosition(-10, 0, 8000);
 }
 
 void Viewer::lonLat2Point(float lon, float lat, Vector *pos, GLdouble extra)
 {
-    pos->x = (EARTH_RADIUS + extra) * cos(lon) * cos(lat);
+    /*pos->x = (EARTH_RADIUS + extra) * cos(lon) * cos(lat);
     pos->y = (EARTH_RADIUS + extra) * sin(lon) * cos(lat);
-    pos->z = (EARTH_RADIUS + extra) * sin(lat);
+    pos->z = (EARTH_RADIUS + extra) * sin(lat);*/
 
-    /*float    angX, angY;
+    float    angX, angY;
     angX = (180.f+lat) * PI / 180.f;
     angY = lon * PI / 180.f;
     pos->x = fabsf(cosf(angY)) * (EARTH_RADIUS + extra) * sinf(angX);
-    pos->y = EARTH_RADIUS + extra * sinf(angY);
+    pos->y = (EARTH_RADIUS + extra) * sinf(angY);
     pos->z = fabsf(cosf(angY)) * (EARTH_RADIUS + extra) * cosf(angX);
-    qDebug() << pos->x << pos->y << pos->z;*/
+    //qDebug() << pos->x << pos->y << pos->z;
 }
 
 void Viewer::drawNames()
@@ -126,7 +139,7 @@ void Viewer::drawNames()
     QFont myFont( "TypeWriter", 6, QFont::Bold);
     for (int i=0; i<NUM_COUNTRIES-1; i++) {
        lonLat2Point(countries[i].lon, countries[i].lat, &countries_positions[i],0);
-       lonLat2Point(countries[i].lon, countries[i].lat, &countries_positions2[i],1);
+       lonLat2Point(countries[i].lon, countries[i].lat, &countries_positions2[i],1000);
        glBegin(GL_LINES);
            glColor4f(1,0,0,1.0f);
            glVertex3f (countries_positions[i].x  ,  countries_positions[i].y  ,  countries_positions[i].z);
