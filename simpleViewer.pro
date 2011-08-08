@@ -14,7 +14,7 @@ TARGET   = simpleViewer
 HEADERS  = simpleViewer.h
 SOURCES  = simpleViewer.cpp main.cpp
 
-RESOURCES += simpleViewer.qrc
+RESOURCES = simpleViewer.qrc
 
 QT *= core xml opengl
 

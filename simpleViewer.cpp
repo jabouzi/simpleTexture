@@ -52,6 +52,7 @@ void Viewer::draw()
     glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
     glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
+    glPushMatrix();
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glPushMatrix();
     glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);  
@@ -63,6 +64,7 @@ void Viewer::draw()
     glPushMatrix();
     //glLoadIdentity();
     drawCurve();
+    glPopMatrix();
     glPopMatrix();
     
     // position the light
@@ -94,14 +96,14 @@ void Viewer::init()
 	QImage image = QGLWidget::convertToGLFormat(QImage("earth.jpg"));
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-    glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    //glPixelStorei (GL_UNPACK_ALIGNMENT, 1);
+    //glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    //glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     /* glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); */
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     /* glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); */
-    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+    //glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    //glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	gluBuild2DMipmaps(GL_TEXTURE_2D,     // texture to specify
 			  GL_RGBA,           // internal texture storage format
 			  image.width(),     // texture width
@@ -174,9 +176,10 @@ void Viewer::drawCurve()
     //glMatrixMode(GL_MODELVIEW);
     
     glBegin(GL_POINTS);
-    //glPushMatrix();
-    //glColor3f(1.0,1.0,0.0);
-    //glPopMatrix();
+    glPushMatrix();
+    glLoadIdentity();
+    glColor3f(1.0,1.0,0.0);
+    glPopMatrix();
     glVertex3f(v1[0].x, v1[0].y, v1[0].z);
     glVertex3f(v1[1].x, v1[1].y, v1[1].z);
     glVertex3f(v2[0].x, v2[0].y, v2[0].z);
@@ -190,20 +193,22 @@ void Viewer::drawCurve()
     glEnable (GL_MAP1_VERTEX_3);
 
     GLint k;
-    //glPushMatrix();
-    //glColor3f (1.0, 0.0, 1.0);
-    //glPopMatrix();
+    glPushMatrix();
+    glLoadIdentity();
+    glColor3f (0.0, 1.0, 1.0);
+    glPopMatrix();
     glBegin (GL_LINE_STRIP);             //  Generate Bezier "curve".
         glLineWidth(20);
         for (k = 0; k <= 50; k++)
             glEvalCoord1f (GLfloat (k) / 50.0);
     glEnd ( );
 
-    //glPushMatrix();
-    //glColor3f (1.0, 0.0, 1.0);
-    //glPopMatrix();
+    glPushMatrix();
+    glLoadIdentity();
+    glColor3f (1.0, 0.0, 1.0);
+    glPopMatrix();
     glBegin (GL_POINTS);                 //  Plot control points.
-    glPointSize (5.0);                   //  Set point size to 5.0.
+    glPointSize (25.0);                   //  Set point size to 5.0.
         for (k = 0; k < 4; k++);
                 glVertex3fv (&ctrlPts [k][0]);
     glEnd ( );
