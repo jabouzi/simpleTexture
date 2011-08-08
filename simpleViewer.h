@@ -37,7 +37,6 @@ public:
 protected :
   virtual void draw();
   virtual void init();
-  virtual QString helpString() const;
 private:
 	GLuint		texture;
 	GLUquadric	*quadric;

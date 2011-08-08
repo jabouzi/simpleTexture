@@ -14,6 +14,8 @@ TARGET   = simpleViewer
 HEADERS  = simpleViewer.h
 SOURCES  = simpleViewer.cpp main.cpp
 
+RESOURCES += simpleViewer.qrc
+
 QT *= core xml opengl
 
 CONFIG += qt opengl warn_on thread rtti console embed_manifest_exe no_keywords

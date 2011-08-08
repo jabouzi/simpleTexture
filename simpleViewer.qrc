@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+   <file>earth.jpg</file>  
+   <file>earth_elevation.jpg</file>  
+   <file>earth_politics.jpg</file> 
+</qresource>
+</RCC>
