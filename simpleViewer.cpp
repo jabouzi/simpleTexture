@@ -63,10 +63,10 @@ void Viewer::draw()
     //glPushMatrix();
     //drawNames();
     //glPopMatrix();
-    glPushMatrix();
+    //glPushMatrix();
     //glLoadIdentity();
     drawCurve();
-    glPopMatrix();
+    //glPopMatrix();
     //glPopMatrix();
     
     // position the light
@@ -220,5 +220,6 @@ void Viewer::drawCurve()
                 glVertex3fv (&ctrlPts [k][0]);
     glEnd ( );
     //glPopMatrix();
+    glFlush();
     
 }
