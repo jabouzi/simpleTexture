@@ -57,6 +57,7 @@ void Viewer::init()
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     glDisable(GL_COLOR_MATERIAL);
+    //glEnable(GL_POLYGON_OFFSET_FILL);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glEnable(GL_DEPTH_TEST);
