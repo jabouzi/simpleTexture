@@ -17,7 +17,6 @@ void Viewer::draw()
     float pos[4] = {0, 0, 9000, 0};
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glLightfv(GL_LIGHT1, GL_POSITION, pos);
-    glPopMatrix();
     
     glBindTexture(GL_TEXTURE_2D, texture);
     
@@ -62,7 +61,6 @@ void Viewer::init()
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
     glDisable(GL_COLOR_MATERIAL);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glEnable(GL_DEPTH_TEST);
@@ -116,7 +114,7 @@ void Viewer::drawNames()
 {
     glDisable(GL_LIGHTING);
     glDisable(GL_LIGHT1);
-    //glEnable(GL_BLEND);
+    glEnable(GL_BLEND);
     glLineWidth(1);
     Vector countries_positions[NUM_COUNTRIES];
     Vector countries_positions2[NUM_COUNTRIES];
@@ -132,7 +130,7 @@ void Viewer::drawNames()
        glColor4f(1.0, 1.0, 1.0, 1.0);
        renderText(countries_positions2[i].x  ,  countries_positions2[i].y  ,  countries_positions2[i].z, QString(countries[i].name), myFont );
     }
-    //glDisable(GL_BLEND);
+    glDisable(GL_BLEND);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT1);
 }
@@ -146,10 +144,10 @@ void Viewer::drawLines()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glLineWidth(lineWidth);
+    glColor4f(0,0,0,1.0f);
     for (int y=0; y<=EARTH_LAT_RES; y++) {
         glBegin(GL_LINE_STRIP);
-        for (int x=0; x<=EARTH_LON_RES; x++) {
-            glColor4f(0,0,0,1.0f);
+        for (int x=0; x<=EARTH_LON_RES; x++) {            
             float    angX, angY;
             angX = (x * 360.f / EARTH_LON_RES) * PI / 180.f;
             angY = (-90.f + (y * 180.f / EARTH_LAT_RES)) * PI / 180.f;
@@ -161,10 +159,10 @@ void Viewer::drawLines()
         glEnd();
     }
 
+    glColor4f(0,0,0,1.0f);
     for (int x=0; x<=EARTH_LON_RES; x++) {
        glBegin(GL_LINE_STRIP);
-       for (int y=0; y<=EARTH_LAT_RES; y++) {
-           glColor4f(0,0,0,1.0f);
+       for (int y=0; y<=EARTH_LAT_RES; y++) {           
            float    angX, angY;
             angX = (x * 360.f / EARTH_LON_RES) * PI / 180.f;
             angY = (-90.f + (y * 180.f / EARTH_LAT_RES)) * PI / 180.f;
@@ -194,10 +192,9 @@ void Viewer::drawCurve()
     lonLat2Point(45.0, -73.0, &v2[1],4000);
 
     /*glPushMatrix();
-    glBegin(GL_POINTS);
-        glPointSize (20);    
-        glColor3f(1.0,1.0,0.0);
-        glPopMatrix();
+    glColor3f(1.0,1.0,0.0);
+    glPointSize (5); 
+    glBegin(GL_POINTS);       
         glVertex3f(v1[0].x, v1[0].y, v1[0].z);
         glVertex3f(v1[1].x, v1[1].y, v1[1].z);
         glVertex3f(v2[0].x, v2[0].y, v2[0].z);
@@ -213,23 +210,23 @@ void Viewer::drawCurve()
 
     GLint k;
     
-    glPushMatrix();
-    glBegin (GL_LINE_STRIP);    
-        glColor3f (1.0, 0.0, 0.0);
-        glLineWidth(10);
+    glColor3f (1.0, 1.0, 0.0);
+    glLineWidth(2);
+    glBegin (GL_LINE_STRIP);
         for (k = 0; k <= 50; k++)
             glEvalCoord1f (GLfloat (k) / 50.0);
     glEnd ( );
-    glPopMatrix();
 
-    glPushMatrix();
-    glBegin (GL_POINTS);                 
     glColor3f (1.0, 0.0, 1.0);
-    glPointSize (10);                   
-        for (k = 0; k < 4; k++);
-                glVertex3fv (&ctrlPts [k][0]);
+    glPointSize (3);          
+    glBegin (GL_POINTS);             
+        for (k = 0; k < 4; k++)
+        {
+            glVertex3fv (&ctrlPts [k][0]);
+        }
     glEnd ( );
-    glPopMatrix();
+
+    glDisable (GL_MAP1_VERTEX_3);
     
     glDisable(GL_BLEND);
     glEnable(GL_LIGHTING);
