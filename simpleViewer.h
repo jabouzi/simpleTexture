@@ -29,6 +29,8 @@ struct Vector {
 
 #define PI 3.14159265
 #define EARTH_RADIUS    6378
+#define EARTH_LON_RES    60    // Longitude Resolution (x)
+#define EARTH_LAT_RES    60    // Latitude Resolution (y)
 
 class Viewer : public QGLViewer
 {
@@ -42,7 +44,8 @@ private:
 	GLUquadric	*quadric;
     qglviewer::ManipulatedFrame* light1;
 
-    void drawNames();
     void lonLat2Point(float , float , Vector *, GLdouble);
+    void drawNames();
+    void drawLines();
     void drawCurve();
 };
