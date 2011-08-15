@@ -36,12 +36,8 @@ void Viewer::draw()
     //glRotatef(-15.0f, 0.0f, 0.0f, 1.0f);  
     gluSphere(quadric, EARTH_RADIUS, 360, 180);
     glPopMatrix();
-    //glDisable(GL_LIGHTING);
-    //glDisable(GL_LIGHT0);
     //drawNames();
-    //glPushMatrix();   
     drawLines();
-    //glPopMatrix();
     drawCurve();
 
     /*if (light1->grabsMouse())
