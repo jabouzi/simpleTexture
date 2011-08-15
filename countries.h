@@ -3,7 +3,7 @@
 #define NUM_COUNTRIES	267
 
 struct Country {
-    char *name;
+    QString name;
     float lon, lat;
 };
 

@@ -36,23 +36,25 @@ Viewer::~Viewer()
 // Draws a spiral
 void Viewer::draw()
 {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     float pos[4] = {0, 0, 9000, 0};
-    glPushMatrix();
+    //glPushMatrix();
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     //light1->getPosition(pos[0], pos[1], pos[2]);
     glLightfv(GL_LIGHT1, GL_POSITION, pos);
     glPopMatrix();
     
     glBindTexture(GL_TEXTURE_2D, texture);   
-    /*GLfloat matAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+    GLfloat matAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
     GLfloat matDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat matSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat matShininess[] = { 10.0f };
     glMaterialfv(GL_FRONT, GL_AMBIENT, matAmbient);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR, matSpecular);
-    glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);*/
+    glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
     //glPushMatrix();
+    
     glRotatef(-90.0f, 0.0f, 1.0f, 0.0f);
     glPushMatrix();
     glRotatef(-180.0f, 0.0f, 1.0f, 0.0f);  
@@ -60,6 +62,7 @@ void Viewer::draw()
     //glRotatef(-15.0f, 0.0f, 0.0f, 1.0f);  
     gluSphere(quadric, EARTH_RADIUS, 360, 180);
     glPopMatrix();
+    
     //glPushMatrix();
     //drawNames();
     //glPopMatrix();
@@ -74,10 +77,10 @@ void Viewer::draw()
     //glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
     //glEnable(GL_LIGHT0);  
-    //if (light1->grabsMouse())
-        //drawLight(GL_LIGHT1, 1.2f);
-    //else
-        //drawLight(GL_LIGHT1); 
+    /*if (light1->grabsMouse())
+        drawLight(GL_LIGHT1, 1.2f);
+    else
+        drawLight(GL_LIGHT1); */
 }
 
 void Viewer::init()
@@ -90,6 +93,7 @@ void Viewer::init()
 	glEnable(GL_TEXTURE_2D);
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHT0);
+    glDisable(GL_COLOR_MATERIAL);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -220,6 +224,6 @@ void Viewer::drawCurve()
                 glVertex3fv (&ctrlPts [k][0]);
     glEnd ( );
     //glPopMatrix();
-    glFlush();
+    //glFlush();
     
 }
