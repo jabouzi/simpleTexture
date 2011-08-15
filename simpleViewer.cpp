@@ -193,7 +193,7 @@ void Viewer::drawCurve()
     lonLat2Point(45.0, -73.0, &v1[1],0);
     lonLat2Point(45.0, -73.0, &v2[1],4000);
 
-    glPushMatrix();
+    /*glPushMatrix();
     glBegin(GL_POINTS);
         glPointSize (20);    
         glColor3f(1.0,1.0,0.0);
@@ -203,7 +203,7 @@ void Viewer::drawCurve()
         glVertex3f(v2[0].x, v2[0].y, v2[0].z);
         glVertex3f(v2[1].x, v2[1].y, v2[1].z);
     glEnd();
-    glPopMatrix();
+    glPopMatrix();*/
 
     GLfloat ctrlPts [4][3] = { {v1[0].x, v1[0].y, v1[0].z}, {v2[0].x, v2[0].y, v2[0].z},
                                    {v2[1].x, v2[1].y, v2[1].z},  {v1[1].x, v1[1].y, v1[1].z} };
