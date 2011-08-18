@@ -186,13 +186,13 @@ void Viewer::drawCurve()
     Vector v3[2];
     Vector v4[2];
     lonLat2Point(21.4273779,39.8148383, &v1[0],0);
-    lonLat2Point(21.427377,9.8148383, &v2[0],4000);
+    lonLat2Point(21.427377,9.8148383, &v2[0],100);
     lonLat2Point(45.0, -73.0, &v1[1],0);
-    lonLat2Point(45.0, -73.0, &v2[1],4000);
+    lonLat2Point(45.0, -73.0, &v2[1],100);
     lonLat2Point(21.4273779,39.8148383, &v3[0],0);
-    lonLat2Point(21.427377,9.8148383, &v4[0],4000);
+    lonLat2Point(21.427377,9.8148383, &v4[0],100);
     lonLat2Point(34.0, 9.0, &v3[1],0);
-    lonLat2Point(34.0, 9.0, &v4[1],4000);
+    lonLat2Point(34.0, 9.0, &v4[1],100);
 
     /*glPushMatrix();
     glColor3f(1.0,1.0,0.0);
