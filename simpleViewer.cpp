@@ -194,6 +194,18 @@ void Viewer::drawCurve()
     lonLat2Point(34.0, 9.0, &v3[1],0);
     lonLat2Point(34.0, 9.0, &v4[1],1000);
 
+    /*Mid point*/
+    float lat1 = 45.0;
+    float lon1 = -73.0;
+    float lat2 = 21.4273779;
+    float lon2 = 39.8148383;
+    float Bx = cos(lat2) * cos(lon1 - lon2);
+    float By = cos(lat2) * sin(lon1 - lon2);
+    float lat3 = atan2(sin(lat1)+sin(lat2), sqrt( (cos(lat1)+Bx)*(cos(lat1)+Bx) + By*By) ); 
+    float lon3 = lon1 + atan2(By, cos(lat1) + Bx);
+
+    qDebug() << lat3 << lon3;
+
     /*glPushMatrix();
     glColor3f(1.0,1.0,0.0);
     glPointSize (5); 
