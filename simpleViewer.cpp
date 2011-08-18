@@ -183,10 +183,16 @@ void Viewer::drawCurve()
     
     Vector v1[2];
     Vector v2[2];
+    Vector v3[2];
+    Vector v4[2];
     lonLat2Point(21.4273779,39.8148383, &v1[0],0);
     lonLat2Point(21.427377,9.8148383, &v2[0],4000);
     lonLat2Point(45.0, -73.0, &v1[1],0);
     lonLat2Point(45.0, -73.0, &v2[1],4000);
+    lonLat2Point(21.4273779,39.8148383, &v3[0],0);
+    lonLat2Point(21.427377,9.8148383, &v4[0],4000);
+    lonLat2Point(34.0, 9.0, &v3[1],0);
+    lonLat2Point(34.0, 9.0, &v4[1],4000);
 
     /*glPushMatrix();
     glColor3f(1.0,1.0,0.0);
@@ -201,8 +207,11 @@ void Viewer::drawCurve()
 
     GLfloat ctrlPts [4][3] = { {v1[0].x, v1[0].y, v1[0].z}, {v2[0].x, v2[0].y, v2[0].z},
                                    {v2[1].x, v2[1].y, v2[1].z},  {v1[1].x, v1[1].y, v1[1].z} };
+    GLfloat ctrlPts2 [4][3] = { {v3[0].x, v3[0].y, v3[0].z}, {v4[0].x, v4[0].y, v4[0].z},
+                                   {v4[1].x, v4[1].y, v4[1].z},  {v3[1].x, v3[1].y, v3[1].z} };
 
     glMap1f (GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, *ctrlPts);
+    //glMap1f (GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, *ctrlPts2);
     glEnable (GL_MAP1_VERTEX_3);
 
     GLint k;
@@ -211,7 +220,10 @@ void Viewer::drawCurve()
     glLineWidth(2);
     glBegin (GL_LINE_STRIP);
         for (k = 0; k <= 50; k++)
+            //glPushMatrix();
             glEvalCoord1f (GLfloat (k) / 50.0);
+            //glTranslatef(100,0,0);
+            //glPopMatrix();
     glEnd ( );
 
     glColor3f (1.0, 0.0, 1.0);
@@ -220,6 +232,32 @@ void Viewer::drawCurve()
         for (k = 0; k < 4; k++)
         {
             glVertex3fv (&ctrlPts [k][0]);
+        }
+    glEnd ( );
+
+    glDisable (GL_MAP1_VERTEX_3);    
+    
+
+    
+    glMap1f (GL_MAP1_VERTEX_3, 0.0, 1.0, 3, 4, *ctrlPts2);
+    glEnable (GL_MAP1_VERTEX_3);
+    
+    glColor3f (1.0, 0.0, 0.0);
+    glLineWidth(2);
+    glBegin (GL_LINE_STRIP);
+        for (k = 0; k <= 50; k++)
+            //glPushMatrix();
+            glEvalCoord1f (GLfloat (k) / 50.0);
+            //glTranslatef(100,0,0);
+            //glPopMatrix();
+    glEnd ( );
+
+    glColor3f (1.0, 0.0, 1.0);
+    glPointSize (3);          
+    glBegin (GL_POINTS);             
+        for (k = 0; k < 4; k++)
+        {
+            glVertex3fv (&ctrlPts2 [k][0]);
         }
     glEnd ( );
 
