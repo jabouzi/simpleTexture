@@ -185,6 +185,7 @@ void Viewer::drawCurve()
     Vector v2[2];
     Vector v3[2];
     Vector v4[2];
+    Vector v5[2];
     lonLat2Point(21.4273779,39.8148383, &v1[0],0);
     lonLat2Point(21.427377,9.8148383, &v2[0],1000);
     lonLat2Point(45.0, -73.0, &v1[1],0);
@@ -204,7 +205,14 @@ void Viewer::drawCurve()
     float lat3 = atan2(sin(lat1)+sin(lat2), sqrt( (cos(lat1)+Bx)*(cos(lat1)+Bx) + By*By) ); 
     float lon3 = lon1 + atan2(By, cos(lat1) + Bx);
 
-    qDebug() << lat3 << lon3;
+    //qDebug() << lat3 << lon3;
+
+    lonLat2Point(lat3,lon3, &v5[0],0);
+    glColor3f (0.0, 1.0, 1.0);
+    glPointSize (3);          
+    glBegin (GL_POINTS);             
+        glVertex3f(v5[0].x, v5[0].y, v5[0].z);
+    glEnd ( );
 
     /*glPushMatrix();
     glColor3f(1.0,1.0,0.0);
