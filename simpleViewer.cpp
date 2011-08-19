@@ -37,7 +37,7 @@ void Viewer::draw()
     gluSphere(quadric, EARTH_RADIUS, 360, 180);
     glPopMatrix();
     //drawNames();
-    drawLines();
+    //drawLines();
     drawCurve();
 
     /*if (light1->grabsMouse())
@@ -59,7 +59,7 @@ void Viewer::init()
     glDisable(GL_COLOR_MATERIAL);
     //glEnable(GL_POLYGON_OFFSET_FILL);
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
@@ -187,25 +187,32 @@ void Viewer::drawCurve()
     Vector v4[2];
     Vector v5[2];
     lonLat2Point(21.4273779,39.8148383, &v1[0],0);
-    lonLat2Point(21.427377,9.8148383, &v2[0],1000);
+    lonLat2Point(21.427377,9.8148383, &v2[0],0);
     lonLat2Point(45.0, -73.0, &v1[1],0);
-    lonLat2Point(45.0, -73.0, &v2[1],1000);
+    lonLat2Point(45.0, -73.0, &v2[1],0);
     lonLat2Point(21.4273779,39.8148383, &v3[0],0);
-    lonLat2Point(21.427377,9.8148383, &v4[0],1000);
+    lonLat2Point(21.427377,9.8148383, &v4[0],0);
     lonLat2Point(34.0, 9.0, &v3[1],0);
-    lonLat2Point(34.0, 9.0, &v4[1],1000);
+    lonLat2Point(34.0, 9.0, &v4[1],0);
 
     /*Mid point*/
     float lat1 = 45.0;
     float lon1 = -73.0;
     float lat2 = 21.4273779;
     float lon2 = 39.8148383;
-    float Bx = cos(lat2) * cos(lon1 - lon2);
-    float By = cos(lat2) * sin(lon1 - lon2);
+    /*float Bx = cos(lat2) * cos(lon2 - lon1);
+    float By = cos(lat2) * sin(lon2 - lon1);
     float lat3 = atan2(sin(lat1)+sin(lat2), sqrt( (cos(lat1)+Bx)*(cos(lat1)+Bx) + By*By) ); 
-    float lon3 = lon1 + atan2(By, cos(lat1) + Bx);
+    float lon3 = lon1 + atan2(By, cos(lat1) + Bx);*/
 
-    //qDebug() << lat3 << lon3;
+    float lat3 = (lat1+lat2)/2;
+    float lon3 = (lon1+lon2)/2;
+    //float f1 = tan(PI/4 + lat1/2);
+    //float f2 = tan(PI/4 + lat2/2);
+    //float f3 = tan(PI/4 + lat3/2);
+    //float lon3 = ( (lon2-lon1)*log(f3) + lon1*log(f2) - lon2*log(f1) ) / log(f2/f1);
+
+    qDebug() << lat3 << lon3;
 
     lonLat2Point(lat3,lon3, &v5[0],0);
     glColor3f (0.0, 1.0, 1.0);
