@@ -292,3 +292,5 @@ macx|darwin-g++ {
 win32 {
   RC_FILE = ../qglviewer.rc
 }
+
+LIBS += -lGLU
